@@ -1,6 +1,16 @@
 package domain
 
-import "time"
+import (
+	"errors"
+	"time"
+)
+
+var (
+	ErrEventNameRequired    = errors.New("vent name is required")
+	ErrEventDateFuture      = errors.New("vent date must be in the future")
+	ErrEventCapacityGreater = errors.New("vent capacity must be greater than zero")
+	ErrEventPriceGreater    = errors.New("vent capacity must be price than zero")
+)
 
 type Rating string
 
@@ -26,4 +36,21 @@ type Event struct {
 	PartnerID    int
 	Spots        []Spot
 	Tickets      []Ticket
+}
+
+func (e Event) Validate() error {
+	validacoes := map[bool]error{
+        e.Name == "":            ErrEventNameRequired,
+        e.Date.Before(time.Now()): ErrEventDateFuture,
+        e.Capacity <= 0:         ErrEventCapacityGreater,
+        e.Price <= 0:            ErrEventPriceGreater,
+    }
+
+    for condicao, err := range validacoes {
+        if condicao {
+            return err
+        }
+    }
+
+    return nil
 }
