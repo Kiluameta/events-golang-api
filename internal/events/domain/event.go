@@ -40,10 +40,10 @@ type Event struct {
 
 func (e Event) Validate() error {
 	validacoes := map[bool]error{
-        e.Name == "":            ErrEventNameRequired,
+        e.Name == "":              ErrEventNameRequired,
         e.Date.Before(time.Now()): ErrEventDateFuture,
-        e.Capacity <= 0:         ErrEventCapacityGreater,
-        e.Price <= 0:            ErrEventPriceGreater,
+        e.Capacity <= 0:           ErrEventCapacityGreater,
+        e.Price <= 0:              ErrEventPriceGreater,
     }
 
     for condicao, err := range validacoes {
@@ -53,4 +53,13 @@ func (e Event) Validate() error {
     }
 
     return nil
+}
+
+func (e *Event) AddSpot(name string) (*Spot, error) {
+	spot, err := NewSpot(e, name)
+	if err != nil {
+		return nil, err
+	}
+	e.Spots = append(e.Spots, *spot)
+	return spot, nil
 }
