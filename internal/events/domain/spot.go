@@ -62,3 +62,14 @@ func (s *Spot) Validate() error {
 
     return nil
 }
+
+func (s *Spot) Reserve(ticketID string) error {
+	if s.Status == SpotStatusReserved{
+		return ErrSpotAlreadyReserved
+    }
+
+	s.Status = SpotStatusReserved
+	s.TicketID = ticketID
+
+	return nil
+}
