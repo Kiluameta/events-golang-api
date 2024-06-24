@@ -6,10 +6,11 @@ import (
 )
 
 var (
-	ErrEventNameRequired    = errors.New("vent name is required")
-	ErrEventDateFuture      = errors.New("vent date must be in the future")
-	ErrEventCapacityGreater = errors.New("vent capacity must be greater than zero")
-	ErrEventPriceGreater    = errors.New("vent capacity must be price than zero")
+	ErrEventNameRequired    = errors.New("event name is required")
+	ErrEventDateFuture      = errors.New("event date must be in the future")
+	ErrEventCapacityGreater = errors.New("event capacity must be greater than zero")
+	ErrEventPriceGreater    = errors.New("event capacity must be price than zero")
+	ErrEventNotFound        = errors.New("event not found")
 )
 
 type Rating string
